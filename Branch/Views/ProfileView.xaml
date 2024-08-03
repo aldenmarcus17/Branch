@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ViewModels="clr-namespace:Branch.ViewModels" xmlns:model="clr-namespace:Branch.Models"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit" xmlns:branch="clr-namespace:Branch"
+             x:Class="Branch.Views.ProfileView"
+             BackgroundColor="White"
+             x:DataType="ViewModels:ProfileViewModel">
+
+    <ContentPage.BindingContext>
+        <ViewModels:ProfileViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content CachingStrategy="RecycleElement">
+        <ScrollView>
+            <StackLayout Orientation="Vertical" Spacing="10">
+                <StackLayout HorizontalOptions="Center" Orientation="Vertical" Padding="10">
+                    <Label Text="Profile Form" FontSize="28" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <Label Text="Fill out a Mentor/Student form and connect with people in your community!" FontSize="14" HorizontalOptions="CenterAndExpand"/>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Start" Padding="10">
+                    <Frame CornerRadius="20" HasShadow="True">
+                        <Label Text="Mentor" FontAttributes="Bold"/>
+                    </Frame>
+                    <Switch Scale="1.3" OnColor="BurlyWood" ThumbColor="SaddleBrown" IsToggled="{Binding IsStudent}"/>
+                    <Frame CornerRadius="20" HasShadow="True">
+                        <Label Text="Student" FontAttributes="Bold"/>
+                    </Frame>
+                </StackLayout>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Grid.Column="1">
+                        <Frame CornerRadius="20" HasShadow="True">
+                            <StackLayout>
+                                <Label Text="Name" FontAttributes="Bold"/>
+                                <Entry FontSize="12"
+                                Placeholder="Enter Name Here..." MaxLength="20"
+                                PlaceholderColor="SaddleBrown" TextColor="SaddleBrown"
+                                       Text="{Binding Name}"/>
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+                </Grid>
+                
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Grid.Column="1">
+                        <Frame CornerRadius="20" HasShadow="True" >
+                            <StackLayout>
+                                <Label Text="Topic" FontAttributes="Bold"/>
+                                <Entry FontSize="12"
+                                Placeholder="Enter Topic Here..." MaxLength="20"
+                                PlaceholderColor="SaddleBrown" TextColor="SaddleBrown"
+                                       Text="{Binding Topic}"/>
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+                </Grid>
+
+                <StackLayout Padding="10">
+                    <Frame CornerRadius="20" HasShadow="True">
+                        <StackLayout>
+                            <Label Text="Description" FontAttributes="Bold"/>
+                            <Editor FontSize="12"
+                                Placeholder="What are you looking for/how can you help?"
+                                AutoSize="TextChanges" MaxLength="200"
+                                PlaceholderColor="SaddleBrown" TextColor="SaddleBrown"
+                                    Text="{Binding Description}"/>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Grid.Column="1">
+                        <Frame CornerRadius="20" HasShadow="True" >
+                            <StackLayout>
+                                <Label Text="Tag" FontAttributes="Bold"/>
+                                <Entry FontSize="12"
+                                Placeholder="Enter Tag Here..." MaxLength="20"
+                                PlaceholderColor="SaddleBrown" TextColor="SaddleBrown"
+                                       Keyboard="Email"
+                                       Text="{Binding Tag}"/>
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Grid.Column="1">
+                        <Frame CornerRadius="20" HasShadow="True" >
+                            <StackLayout>
+                                <Label Text="Email" FontAttributes="Bold"/>
+                                <Entry FontSize="12"
+                                Placeholder="Enter Email Here..." MaxLength="50"
+                                PlaceholderColor="SaddleBrown" TextColor="SaddleBrown"
+                                       Keyboard="Email"
+                                       Text="{Binding Email}"/>
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+                </Grid>
+                
+
+                <Label Text="Make sure all your information is correct!" HorizontalOptions="Center"></Label>
+
+                <Grid Padding="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Text="Submit" Grid.Column="1" Command="{Binding SaveCommand}"/>
+                </Grid>
+
+            </StackLayout>
+            </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

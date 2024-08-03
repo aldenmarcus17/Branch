@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ViewModels="clr-namespace:Branch.ViewModels" xmlns:model="clr-namespace:Branch.Models"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit" xmlns:branch="clr-namespace:Branch"
+             x:Class="Branch.Views.StudentView"
+             BackgroundColor="White"
+             x:DataType="ViewModels:StudentViewModel">
+
+    <ContentPage.BindingContext>
+        <ViewModels:StudentViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:ItemSelectedEventArgsConverter x:Key="ItemSelectedEventArgsConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ListView ItemsSource="{Binding Student}"
+              CachingStrategy="RecycleElement"
+              HasUnevenRows="True"
+              SeparatorVisibility="None"
+              IsGroupingEnabled="True"
+              
+              IsPullToRefreshEnabled="True"
+              IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+              RefreshCommand="{Binding RefreshCommand}"
+              SelectedItem="{Binding SelectedStudent}">
+
+        <ListView.Behaviors>
+            <xct:EventToCommandBehavior
+                EventName = "ItemSelected"
+                Command = "{Binding SelectedCommand}"
+                EventArgsConverter = "{StaticResource ItemSelectedEventArgsConverter}"></xct:EventToCommandBehavior>
+        </ListView.Behaviors>
+
+        <ListView.GroupHeaderTemplate>
+            <DataTemplate>
+                <Label FontSize="18" HorizontalOptions="Center" FontAttributes="Bold"/>
+            </DataTemplate>
+        </ListView.GroupHeaderTemplate>
+
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="model:Student">
+                <ViewCell>
+                    <Grid Padding="10">
+                        <Frame CornerRadius="20"
+                               HasShadow="True">
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout>
+                                    <Label VerticalOptions="Center"
+                                            FontSize="18"
+                                            Text="{Binding Name}"/>
+                                    <Label VerticalOptions="Center"
+                                            FontSize="14"
+                                            Text="{Binding Specialty}"/>
+                                    <Label VerticalOptions="Center"
+                                           FontSize="11"
+                                           Text="{Binding Tag}"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+
+        <ListView.Header>
+            <StackLayout>
+                <Label Text="Students" FontSize="28" HorizontalOptions="Center" FontAttributes="Bold"/>
+                <Frame CornerRadius="20" Padding="5" HasShadow="True" Scale="0.95">
+                    <StackLayout>
+                        <Label Text="Filter" FontSize="18" HorizontalOptions="Center" FontAttributes="Bold"/>
+                        <Grid HorizontalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Orientation="Horizontal" Grid.Column="0" HorizontalOptions="Center">
+                                <Label Text="Tutor" VerticalOptions="Center"/>
+                                <CheckBox IsChecked="{Binding TutorFilter}" Color="SaddleBrown"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" Grid.Column="1" HorizontalOptions="Center">
+                                <Label Text="Finance" VerticalOptions="Center"/>
+                                <CheckBox IsChecked="{Binding FinanceFilter}" Color="SaddleBrown"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" Grid.Column="2" HorizontalOptions="Center">
+                                <Label Text="Guidance" VerticalOptions="Center"/>
+                                <CheckBox IsChecked="{Binding GuidanceFilter}" Color="SaddleBrown"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" Grid.Column="3" HorizontalOptions="Center">
+                                <Label Text="Skill" VerticalOptions="Center"/>
+                                <CheckBox IsChecked="{Binding SkillFilter}" Color="SaddleBrown"/>
+                            </StackLayout>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ListView.Header>
+
+        <ListView.Footer>
+            <Grid HorizontalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Row="1">
+                    <Button Text="Load More"
+                        Command="{Binding LoadMoreCommand}"
+                        IsVisible="{Binding Visible}"
+                        ></Button>
+                    <Label Text="No Students."
+                       IsVisible="{Binding NoStudent}"/>
+                </StackLayout>
+            </Grid>
+        </ListView.Footer>
+    </ListView>
+
+</ContentPage>
